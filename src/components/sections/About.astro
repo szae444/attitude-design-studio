@@ -1,0 +1,50 @@
+---
+import SectionHead from '../ui/SectionHead.astro';
+import { facts } from '../../data/site.js';
+---
+<section class="about section light wrap" id="about">
+  <SectionHead index="001" label="About us" aside="Attitude Design Studio®" />
+  <h2 class="about__statement" data-reveal>
+    We believe in long-term partnerships, <span class="serif">not mass client acquisition.</span>
+  </h2>
+  <div class="about__grid grid-12">
+    <p class="about__body">
+      <strong>Attitude Design Studio</strong> is a creative and digital marketing agency established in 2019,
+      helping brands grow through strategic marketing, distinctive branding, social media management, and creative
+      content production. Each team handles a maximum of three clients, so you get dedicated strategists,
+      creatives, and marketing specialists who work as an extension of your internal marketing team.
+    </p>
+  </div>
+  <dl class="facts">
+    {facts.map((f) => <div><dt class="label mute">{f.label}</dt><dd>{f.value}</dd></div>)}
+  </dl>
+</section>
+
+<style>
+  .about__statement {
+    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
+    font-size: var(--t-xl); line-height: 0.98; letter-spacing: -0.05em;
+    max-width: 15ch; text-wrap: balance;
+  }
+  .about__statement .serif { color: var(--mute-l); }
+  .about__grid { margin-top: clamp(40px, 5vw, 64px); }
+  .about__body { grid-column: 7 / span 5; font-size: var(--t-md); line-height: 1.5; letter-spacing: -0.01em; color: #2b2a27; }
+  .about__body strong { font-weight: 600; color: var(--ink); }
+
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(64px, 8vw, 96px); border-top: 1px solid var(--line-l); }
+  .facts > div { padding: var(--s-5) var(--s-5) 0; border-right: 1px solid var(--line-l); }
+  .facts > div:first-child { padding-left: 0; }
+  .facts > div:last-child { border-right: 0; }
+  .facts dd {
+    margin-top: var(--s-6);
+    font-family: var(--f-display); font-weight: 300; font-variation-settings: 'wdth' 106;
+    font-size: clamp(3rem, 7vw, 7rem); line-height: 0.85; letter-spacing: -0.06em;
+  }
+  @media (max-width: 900px) {
+    .about__body { grid-column: 1 / -1; }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .facts > div { padding: var(--s-5) var(--s-4) var(--s-5); border-bottom: 1px solid var(--line-l); }
+    .facts > div:nth-child(odd) { padding-left: 0; }
+    .facts > div:nth-child(even) { border-right: 0; }
+  }
+</style>

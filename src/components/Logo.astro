@@ -1,0 +1,17 @@
+---
+// Official wordmark, exported as outlined vector from the client's Figma
+// (Helvetica Now Display Bold). Inherits colour via currentColor.
+import svg from '../assets/brand/logo-wordmark.svg?raw';
+const { class: cls = '', size = 'md' } = Astro.props;
+---
+<span class:list={['logo', `logo--${size}`, cls]} set:html={svg} />
+
+<style>
+  .logo { display: inline-block; color: currentColor; line-height: 0; }
+  .logo :global(svg) { display: block; width: 100%; height: auto; }
+  .logo--sm { width: 116px; }
+  .logo--md { width: 140px; }
+  /* footer: spans the full content column */
+  .logo--xl { width: 100%; }
+  @media (max-width: 480px) { .logo--sm { width: 92px; } }
+</style>

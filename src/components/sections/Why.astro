@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import SectionHead from '../ui/SectionHead.astro';
+import { usps } from '../../data/site.js';
+import { img } from '../../data/images.js';
+const pad = (n) => String(n).padStart(2, '0');
+---
+<section class="why section light wrap" id="why">
+  <SectionHead index="006" label="Why choose us" aside="Our unique selling points" />
+  <div class="why__top grid-12">
+    <h2 class="why__title" data-reveal>
+      A collaborative, client-first approach, tailored to your vision <span class="serif">and</span> your business goals.
+    </h2>
+    <figure class="why__img">
+      <Image src={img.duo} alt="Two members of the Attitude Design Studio team" widths={[400, 800]} sizes="(max-width: 600px) 100vw, 30vw" />
+    </figure>
+  </div>
+  <ol class="usp">
+    {usps.map((u, i) => (
+      <li>
+        <span class="label">{pad(i + 1)}</span>
+        <h3>{u.t}</h3>
+        <p class="mute">{u.d}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .why__title {
+    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
+    font-size: clamp(2.25rem, 4.6vw, 4.5rem); line-height: 1.02; letter-spacing: -0.04em; max-width: 22ch; text-wrap: balance;
+  }
+  .why__title .serif { color: var(--mute-l); }
+  .why__top { align-items: end; }
+  .why__title { grid-column: 1 / span 8; }
+  .why__img { grid-column: 10 / span 3; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; }
+  .why__img :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; filter: grayscale(1) contrast(1.05); transition: filter .8s var(--ease); }
+  @media (hover: hover) { .why__img:hover :global(img) { filter: none; } }
+  @media (max-width: 900px) {
+    .why__title { grid-column: 1 / span 8; }
+    .why__img { grid-column: 9 / span 4; }
+  }
+  @media (max-width: 600px) { .why__img { aspect-ratio: 4 / 3; max-width: 100%; } }
+  .usp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(64px, 8vw, 96px); border-top: 1px solid var(--line-l); }
+  .usp li { display: grid; gap: var(--s-4); align-content: start; padding: var(--s-5) var(--s-6) var(--s-7); border-bottom: 1px solid var(--line-l); border-right: 1px solid var(--line-l); }
+  .usp li:nth-child(3n) { border-right: 0; padding-right: 0; }
+  .usp li:nth-child(3n + 1) { padding-left: 0; }
+  .usp h3 {
+    margin-top: var(--s-6);
+    font-family: var(--f-display); font-weight: 500; font-variation-settings: 'wdth' 100;
+    font-size: var(--t-lg); line-height: 1; letter-spacing: -0.035em;
+  }
+  .usp p { font-size: 0.98rem; max-width: 40ch; }
+
+  @media (max-width: 1000px) {
+    .usp { grid-template-columns: 1fr 1fr; }
+    .usp li:nth-child(n) { padding: var(--s-5) var(--s-5) var(--s-7); border-right: 1px solid var(--line-l); }
+    .usp li:nth-child(odd) { padding-left: 0; }
+    .usp li:nth-child(even) { padding-right: 0; border-right: 0; }
+  }
+  @media (max-width: 600px) {
+    .usp { grid-template-columns: 1fr; }
+    .usp li:nth-child(n) { padding: var(--s-5) 0 var(--s-6); border-right: 0; }
+    .usp h3 { margin-top: var(--s-3); }
+  }
+</style>

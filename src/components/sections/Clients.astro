@@ -1,0 +1,33 @@
+---
+import { clients } from '../../data/site.js';
+---
+<section class="clients" aria-label="Selected clients">
+  <ul class="sr-only">{clients.map((c) => <li>{c}</li>)}</ul>
+  <div class="marquee" aria-hidden="true">
+    {[0, 1].map(() => (
+      <ul class="marquee__track">
+        {clients.map((c) => <li>{c}<span class="marquee__sep">✦</span></li>)}
+      </ul>
+    ))}
+  </div>
+</section>
+
+<style>
+  .clients { border-block: 1px solid var(--line-d); padding-block: clamp(20px, 2.4vw, 32px); overflow: hidden; background: var(--ink); }
+  .marquee { display: flex; width: max-content; animation: marquee 70s linear infinite; }
+  .clients:hover .marquee { animation-play-state: paused; }
+  .marquee__track { display: flex; flex: none; }
+  .marquee__track li {
+    display: flex; align-items: center; white-space: nowrap;
+    font-family: var(--f-display); font-weight: 500; font-variation-settings: 'wdth' 100;
+    font-size: clamp(1.35rem, 2.6vw, 2.5rem); letter-spacing: -0.035em; text-transform: uppercase;
+    color: rgba(251,250,247,.9);
+  }
+  .marquee__sep { font-size: 0.45em; margin-inline: 0.9em; color: var(--mute-d); }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee { animation: none; width: auto; }
+    .marquee__track:last-child { display: none; }
+    .marquee__track { flex-wrap: wrap; row-gap: var(--s-3); padding-inline: var(--gutter); }
+  }
+</style>

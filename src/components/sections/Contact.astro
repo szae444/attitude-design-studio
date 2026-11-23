@@ -1,0 +1,33 @@
+---
+import Button from '../ui/Button.astro';
+import { BOOKING_URL, EMAIL } from '../../data/site.js';
+---
+<section class="cta section wrap" id="contact">
+  <span class="label mute">/007 Let’s talk</span>
+  <h2 class="cta__title display" data-reveal>
+    <span class="mask"><span>Book a</span></span>
+    <span class="mask"><span><span class="serif">discovery</span> call</span></span>
+  </h2>
+  <div class="cta__row">
+    <p class="cta__p mute">Let’s talk strategy, align expectations, and build a proposal tailored to your business needs and budget.</p>
+    <div class="cta__actions">
+      <Button href={BOOKING_URL} size="lg">Book here</Button>
+      {EMAIL && <a href={`mailto:${EMAIL}`} class="link-u cta__mail">{EMAIL}</a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { padding-bottom: var(--s-9); }
+  .cta__title { font-size: clamp(3rem, 11.5vw, 14.5rem); margin-top: var(--s-6); display: flex; flex-direction: column; }
+  .cta__title > .mask:last-child { align-self: flex-end; }
+  .cta__title .mask { padding-bottom: 0.16em; margin-bottom: -0.16em; }
+  .cta__row { display: flex; justify-content: space-between; align-items: end; gap: var(--s-6); margin-top: var(--s-8); flex-wrap: wrap; }
+  .cta__p { max-width: 40ch; font-size: var(--t-md); line-height: 1.45; }
+  .cta__actions { display: flex; align-items: center; gap: var(--s-6); flex-wrap: wrap; }
+  .cta__mail { font-size: var(--t-md); }
+  @media (max-width: 560px) {
+    .cta__title > .mask:last-child { align-self: flex-start; }
+    .cta__row { margin-top: var(--s-7); }
+  }
+</style>

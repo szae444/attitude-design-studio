@@ -1,0 +1,8 @@
+---
+/** Thin labelled rule that opens every section: "/001 About us ............ aside" */
+const { index, label, aside } = Astro.props;
+---
+<div class="sec-head">
+  <span class="label">/{index} {label}</span>
+  {aside && <span class="label mute">{aside}</span>}
+</div>

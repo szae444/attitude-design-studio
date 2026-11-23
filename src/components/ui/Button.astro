@@ -1,0 +1,11 @@
+---
+/**
+ * Pill button. variant: solid (light) | dark | ghost. `arrow` adds the circular arrow dot.
+ */
+import Arrow from './Arrow.astro';
+const { href = '#', variant = 'solid', arrow = true, size, class: cls, ...rest } = Astro.props;
+---
+<a href={href} class:list={['btn', `btn--${variant}`, size && `btn--${size}`, !arrow && 'btn--plain', cls]} {...rest}>
+  <slot />
+  {arrow && <span class="btn__dot"><Arrow /></span>}
+</a>
