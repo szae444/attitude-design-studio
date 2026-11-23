@@ -25,13 +25,7 @@ export const nav = [
   { label: 'Studio', href: '#studio' },
 ];
 
-export const clients = [
-  'DJI', 'Din Tai Fung', 'Falken', 'Federal Land', 'Wilcon', 'Snow Plus',
-  'Manam', 'K-Street', 'Pickup Coffee', 'Topflite', 'Jill & Pops', 'Sama Sama',
-  'Hotbox', 'Cravewell', 'Plush', 'Bounce', 'Brozza', 'Katinko', 'Buffet Town',
-  'Mavie', 'Ysven', 'Nerawood', 'MNL Pilates', 'Ochazanto Café', 'Aquabest',
-  'Laundrybest', 'Knockout', 'Oceanus', "Nic's", 'Atlas',
-];
+// Client logos: see src/data/clients.json + src/assets/clients/
 
 export const services = [
   {

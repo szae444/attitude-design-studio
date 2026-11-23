@@ -1,33 +1,67 @@
 ---
-import { clients } from '../../data/site.js';
+/**
+ * Client logo marquee. Logos come from the "Our Clients" slide of the company profile and were
+ * converted to one single-colour (white) set. Each logo is optically sized by its aspect ratio,
+ * so wide wordmarks and compact marks carry similar visual weight.
+ */
+import { Image } from 'astro:assets';
+import clients from '../../data/clients.json';
+
+const files = import.meta.glob('../../assets/clients/*.png', { eager: true, import: 'default' });
+const byFile = (f) => files[`../../assets/clients/${f}.png`];
+
+// Recognisable names first, then the rest in deck order.
+const lead = ['dji', 'din-tai-fung', 'falken', 'federal-land', 'wilcon', 'pickup-coffee', 'manam-cafe', 'snow-plus', 'k-street', 'topflite-academy'];
+const ordered = [
+  ...lead.map((f) => clients.find((c) => c.file === f)).filter(Boolean),
+  ...clients.filter((c) => !lead.includes(c.file)),
+];
+// optical size: ~1 for a 2.5:1 wordmark, larger for compact marks, smaller for very wide ones
+const scale = (r) => Math.min(1.55, Math.max(0.62, Math.pow(2.5 / r, 0.42))).toFixed(3);
 ---
 <section class="clients" aria-label="Selected clients">
-  <ul class="sr-only">{clients.map((c) => <li>{c}</li>)}</ul>
+  <ul class="sr-only">{ordered.map((c) => <li>{c.name}</li>)}</ul>
   <div class="marquee" aria-hidden="true">
     {[0, 1].map(() => (
       <ul class="marquee__track">
-        {clients.map((c) => <li>{c}<span class="marquee__sep">✦</span></li>)}
+        {ordered.map((c) => (
+          <li style={`--s:${scale(c.ratio)}`}>
+            <Image src={byFile(c.file)} alt="" widths={[160, 320]} sizes="160px" />
+          </li>
+        ))}
       </ul>
     ))}
   </div>
 </section>
 
 <style>
-  .clients { border-block: 1px solid var(--line-d); padding-block: clamp(20px, 2.4vw, 32px); overflow: hidden; background: var(--ink); }
-  .marquee { display: flex; width: max-content; animation: marquee 70s linear infinite; }
-  .clients:hover .marquee { animation-play-state: paused; }
-  .marquee__track { display: flex; flex: none; }
-  .marquee__track li {
-    display: flex; align-items: center; white-space: nowrap;
-    font-family: var(--f-display); font-weight: 500; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.35rem, 2.6vw, 2.5rem); letter-spacing: -0.035em; text-transform: uppercase;
-    color: rgba(251,250,247,.9);
+  .clients {
+    --lh: clamp(26px, 2.6vw, 40px);  /* base logo height */
+    border-block: 1px solid var(--line-d);
+    padding-block: clamp(28px, 3.2vw, 44px);
+    overflow: hidden; background: var(--ink);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   }
-  .marquee__sep { font-size: 0.45em; margin-inline: 0.9em; color: var(--mute-d); }
+  .marquee { display: flex; width: max-content; animation: marquee 80s linear infinite; }
+  .clients:hover .marquee { animation-play-state: paused; }
+  .marquee__track { display: flex; align-items: center; flex: none; }
+  .marquee__track li {
+    display: flex; align-items: center; justify-content: center;
+    height: calc(var(--lh) * 1.6);
+    padding-inline: clamp(22px, 2.8vw, 44px);
+  }
+  .marquee__track li :global(img) {
+    height: calc(var(--lh) * var(--s)); width: auto; max-width: none;
+    opacity: .72; transition: opacity .35s var(--ease);
+  }
+  @media (hover: hover) { .marquee__track li:hover :global(img) { opacity: 1; } }
   @keyframes marquee { to { transform: translateX(-50%); } }
+
   @media (prefers-reduced-motion: reduce) {
+    .clients { -webkit-mask-image: none; mask-image: none; }
     .marquee { animation: none; width: auto; }
     .marquee__track:last-child { display: none; }
-    .marquee__track { flex-wrap: wrap; row-gap: var(--s-3); padding-inline: var(--gutter); }
+    .marquee__track { flex-wrap: wrap; justify-content: center; row-gap: var(--s-4); padding-inline: var(--gutter); }
   }
 </style>
