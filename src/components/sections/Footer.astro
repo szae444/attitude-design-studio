@@ -1,5 +1,6 @@
 ---
 import Logo from '../Logo.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
 import { nav, socials } from '../../data/site.js';
 const year = new Date().getFullYear();
 ---
@@ -9,10 +10,13 @@ const year = new Date().getFullYear();
     <nav class="foot__nav" aria-label="Footer">
       {nav.map((l) => <a href={l.href} class="link-u">{l.label}</a>)}
       <a href="#contact" class="link-u">Contact</a>
-      <span class="foot__sep" aria-hidden="true"></span>
-      {socials.map((s) => <a href={s.href} target="_blank" rel="noopener" class="link-u">{s.label} ↗</a>)}
     </nav>
-    <a href="#top" class="label link-u">Back to top ↑</a>
+    <div class="foot__end">
+    <ul class="foot__soc">
+      {socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><SocialIcon name={s.icon} /></a></li>)}
+    </ul>
+      <a href="#top" class="label link-u">Back to top ↑</a>
+    </div>
   </div>
   <Logo size="xl" class="foot__logo" />
   <div class="foot__bot label mute">
@@ -26,8 +30,14 @@ const year = new Date().getFullYear();
   .foot__top { display: flex; justify-content: space-between; align-items: center; gap: var(--s-5); flex-wrap: wrap; }
   .foot__nav { display: flex; gap: var(--s-2) var(--s-6); font-size: var(--t-sm); flex-wrap: wrap; }
   .foot__nav a { padding-block: var(--s-2); }
-  .foot__sep { width: 1px; align-self: stretch; margin-block: 6px; background: var(--line-d); }
-  @media (max-width: 600px) { .foot__sep { display: none; } }
+  .foot__end { display: flex; align-items: center; gap: var(--s-6); }
+  .foot__soc { display: flex; gap: var(--s-2); }
+  .foot__soc a {
+    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid var(--line-d); transition: background-color .4s var(--ease), color .4s var(--ease);
+  }
+  .foot__soc :global(svg) { width: 17px; height: 17px; }
+  @media (hover: hover) { .foot__soc a:hover { background: var(--white); color: var(--ink); } }
   .foot :global(.foot__logo) { display: block; margin-block: clamp(56px, 7vw, 96px) var(--s-6); }
   .foot__bot { display: flex; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; padding-top: var(--s-4); border-top: 1px solid var(--line-d); }
 </style>

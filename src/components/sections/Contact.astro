@@ -1,5 +1,6 @@
 ---
 import Button from '../ui/Button.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
 import { BOOKING_URL, EMAIL, socials } from '../../data/site.js';
 ---
 <section class="cta section wrap" id="contact">
@@ -15,17 +16,21 @@ import { BOOKING_URL, EMAIL, socials } from '../../data/site.js';
       {EMAIL && <a href={`mailto:${EMAIL}`} class="link-u cta__mail">{EMAIL}</a>}
     </div>
   </div>
-  <ul class="social" aria-label="Follow Attitude Design Studio">
-    {socials.map((s) => (
-      <li>
-        <a href={s.href} target="_blank" rel="noopener" class="social__a">
-          <span class="label mute">{s.label}</span>
-          <span class="social__h">{s.handle}</span>
-          <span class="social__arrow" aria-hidden="true">↗</span>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <div class="follow">
+    <p class="follow__txt">
+      <span class="label mute">Follow the studio</span>
+      <span class="follow__h">@attitudedesignstudio</span>
+    </p>
+    <ul class="follow__icons">
+      {socials.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="noopener" class="soc" aria-label={`${s.label}: ${s.handle}`}>
+            <SocialIcon name={s.icon} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </section>
 
 <style>
@@ -37,32 +42,27 @@ import { BOOKING_URL, EMAIL, socials } from '../../data/site.js';
   .cta__p { max-width: 40ch; font-size: var(--t-md); line-height: 1.45; }
   .cta__actions { display: flex; align-items: center; gap: var(--s-6); flex-wrap: wrap; }
   .cta__mail { font-size: var(--t-md); }
-  .social { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--s-8); border-top: 1px solid var(--line-d); }
-  .social li + li { border-left: 1px solid var(--line-d); }
-  .social__a {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--s-2) var(--s-4);
-    padding: var(--s-5) var(--s-5) var(--s-5) 0;
+  .follow {
+    display: flex; justify-content: space-between; align-items: center; gap: var(--s-5);
+    margin-top: var(--s-8); padding-top: var(--s-5); border-top: 1px solid var(--line-d);
   }
-  .social li + li .social__a { padding-left: var(--s-5); padding-right: 0; }
-  .social__a .label { grid-column: 1 / -1; }
-  .social__h {
-    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.25rem, 2.6vw, 2.5rem); line-height: 1; letter-spacing: -0.04em;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color .3s;
+  .follow__txt { display: grid; gap: var(--s-2); }
+  .follow__h {
+    font-family: var(--f-serif); font-style: italic; font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+    line-height: 1; letter-spacing: -0.02em; color: rgba(251,250,247,.86);
   }
-  .social__arrow { font-size: clamp(1.25rem, 2.4vw, 2.25rem); line-height: 1; transition: transform .5s var(--ease); }
+  .follow__icons { display: flex; gap: var(--s-3); }
+  .soc {
+    display: grid; place-items: center;
+    width: clamp(56px, 5vw, 72px); aspect-ratio: 1; border-radius: 50%;
+    border: 1px solid rgba(251,250,247,.22); background: rgba(251,250,247,.04);
+    transition: background-color .45s var(--ease), color .45s var(--ease), border-color .45s var(--ease), transform .45s var(--ease);
+  }
+  .soc :global(svg) { width: 42%; height: 42%; transition: transform .45s var(--ease); }
   @media (hover: hover) {
-    .social:hover .social__h { color: var(--mute-d); }
-    .social__a:hover .social__h { color: var(--white); }
-    .social__a:hover .social__arrow { transform: translate(4px, -4px); }
+    .soc:hover { background: var(--white); color: var(--ink); border-color: var(--white); }
+    .soc:hover :global(svg) { transform: scale(1.08); }
   }
-  @media (max-width: 600px) {
-    .social { grid-template-columns: minmax(0, 1fr); }
-    .social li + li { border-left: 0; border-top: 1px solid var(--line-d); }
-    .social__a, .social li + li .social__a { padding: var(--s-5) 0; }
-  }
-  @media (max-width: 560px) {
-    .cta__title > .mask:last-child { align-self: flex-start; }
-    .cta__row { margin-top: var(--s-7); }
-  }
+  .soc:active { transform: scale(.94); }
+  @media (max-width: 480px) { .follow { flex-direction: column; align-items: flex-start; } }
 </style>

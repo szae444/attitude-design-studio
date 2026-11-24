@@ -1,0 +1,16 @@
+---
+/** Monochrome social glyphs (currentColor). name: instagram | facebook */
+const { name } = Astro.props;
+---
+{name === 'instagram' && (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5.2" />
+    <circle cx="12" cy="12" r="4.1" />
+    <circle cx="17.4" cy="6.6" r="1.05" fill="currentColor" stroke="none" />
+  </svg>
+)}
+{name === 'facebook' && (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M13.4 21v-7.6h2.6l.4-3.1h-3V8.4c0-.9.3-1.5 1.6-1.5h1.6V4.1c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.3H7.8v3.1h2.6V21h3z" />
+  </svg>
+)}

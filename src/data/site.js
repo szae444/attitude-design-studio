@@ -4,8 +4,8 @@ export const BOOKING_URL = '#contact';
 export const EMAIL = ''; // e.g. hello@yourdomain.com: leave empty to hide
 
 export const socials = [
-  { label: 'Instagram', handle: '@attitudedesignstudio', href: 'https://www.instagram.com/attitudedesignstudio' },
-  { label: 'Facebook', handle: 'Attitude Design Studio', href: 'https://www.facebook.com/share/1D4LP7RkSY/' },
+  { label: 'Instagram', icon: 'instagram', handle: '@attitudedesignstudio', href: 'https://www.instagram.com/attitudedesignstudio' },
+  { label: 'Facebook', icon: 'facebook', handle: 'Attitude Design Studio', href: 'https://www.facebook.com/share/1D4LP7RkSY/' },
 ];
 
 export const facts = [

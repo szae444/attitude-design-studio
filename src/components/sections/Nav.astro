@@ -1,6 +1,7 @@
 ---
 import Logo from '../Logo.astro';
 import Button from '../ui/Button.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
 import { nav, socials, BOOKING_URL } from '../../data/site.js';
 ---
 <header class="nav wrap">
@@ -27,7 +28,7 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
   </nav>
   <div class="menu__foot wrap">
     <Button href={BOOKING_URL}>Book a discovery call</Button>
-    <p class="menu__social">{socials.map((s) => <a href={s.href} target="_blank" rel="noopener" class="label link-u">{s.label} ↗</a>)}</p>
+    <p class="menu__social">{socials.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><SocialIcon name={s.icon} /></a>)}</p>
     <p class="label mute">Attitude Design Studio® · Est. 2019</p>
   </div>
 </div>
@@ -89,8 +90,9 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
   :global(.menu-open) .menu__link:nth-child(3) { transition-delay: .1s; }
   :global(.menu-open) .menu__link:nth-child(4) { transition-delay: .15s; }
   :global(.menu-open) .menu__link:nth-child(5) { transition-delay: .2s; }
-  .menu__social { display: flex; gap: var(--s-5); }
-  .menu__social a { padding-block: var(--s-2); }
+  .menu__social { display: flex; gap: var(--s-3); }
+  .menu__social a { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-d); }
+  .menu__social :global(svg) { width: 20px; height: 20px; }
   .menu__foot { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-5); }
   @media (min-width: 901px) { .menu { display: none; } }
 </style>
