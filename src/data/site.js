@@ -3,10 +3,15 @@
 export const BOOKING_URL = '#contact';
 export const EMAIL = ''; // e.g. hello@yourdomain.com: leave empty to hide
 
+export const socials = [
+  { label: 'Instagram', handle: '@attitudedesignstudio', href: 'https://www.instagram.com/attitudedesignstudio' },
+  { label: 'Facebook', handle: 'Attitude Design Studio', href: 'https://www.facebook.com/share/1D4LP7RkSY/' },
+];
+
 export const facts = [
   { label: 'Founded', value: '2019' },
   { label: 'Max clients per team', value: '03' },
-  { label: 'People in the studio', value: '16' },
+  { label: 'People in the studio', value: '14' },
   { label: 'Social slots / quarter', value: '30' },
 ];
 
@@ -21,7 +26,7 @@ export const founder = {
 export const nav = [
   { label: 'Services', href: '#services' },
   { label: 'Work', href: '#work' },
-  { label: 'Packages', href: '#packages' },
+  { label: 'Why us', href: '#why' },
   { label: 'Studio', href: '#studio' },
 ];
 
@@ -66,6 +71,20 @@ export const services = [
   },
 ];
 
+// Add-ons that sit on top of any retainer
+export const additionalServices = [
+  {
+    title: 'KOL Management',
+    tag: 'Influencers & creators',
+    body: 'We connect your brand with the right influencers and creators. Through strategic collaborations and authentic storytelling, we build brand awareness, strengthen audience trust, and turn influence into meaningful brand engagement.',
+  },
+  {
+    title: 'TikTok Management',
+    tag: 'Short-form video',
+    body: 'We create trend-driven content tailored for TikTok. From content strategy to creative production and account management, we help your brand stay relevant, reach new audiences, and drive engagement through impactful short-form videos.',
+  },
+];
+
 export const work = [
   { title: 'GURU', kind: 'Brand Identity', img: 'guru', size: 'wide' },
   { title: 'Hardcore Trackday', kind: 'Content Production', img: 'trackday', size: 'tall' },
@@ -74,56 +93,30 @@ export const work = [
   { title: 'Jillian Ward', kind: 'Ad Launch', img: 'jillian', size: 'tall' },
 ];
 
-// Included in every package
-export const packageCore = ['Monthly strategy plan', 'Studio & on-site production covered', 'Dedicated team', 'End-of-month report'];
-
-// Prices intentionally omitted (client request): shown as "On request".
-export const packages = [
-  {
-    name: 'Basic',
-    for: 'Good for start-up & established brands',
-    items: ['Static materials', 'Story content materials', 'Brand content production', 'Reels for Facebook & Instagram'],
-  },
-  {
-    name: 'Basic +',
-    for: 'To generate buzz & sales',
-    items: ['Static materials', 'Story content materials', 'Brand content production', 'Ad campaigns every month', 'Reels for Facebook & Instagram'],
-    featured: true,
-  },
-  {
-    name: 'Business',
-    for: 'Your internal marketing team',
-    items: ['Static materials', 'Story content materials', 'Brand content production', 'Ad campaigns every month', 'Reels for Facebook & Instagram', 'Monthly website update', 'KOL & affiliate marketing'],
-  },
-];
-
 export const usps = [
   { t: 'Affordability meets quality', d: 'As a start-up ourselves, we understand the importance of affordable pricing without sacrificing quality, making us the perfect partner for businesses of all sizes.' },
   { t: 'Tailored creative solutions', d: 'We believe in offering personalized services based on each client’s unique needs and goals, whether you’re a start-up or an established brand.' },
   { t: 'Comprehensive service range', d: 'From visual identity to web development, 360 digital marketing, and TikTok content: a holistic approach with all your creative needs under one roof.' },
-  { t: 'Customizable packages', d: 'Special packages designed exclusively for each client, so your brand’s unique vision and goals are met, from a full-scale rebrand to specific content production.' },
+  { t: 'Built around your brand', d: 'Every engagement is scoped exclusively for each client, so your brand’s unique vision and goals are met, from a full-scale rebrand to specific content production.' },
   { t: 'Collaborative approach', d: 'Open communication and collaboration with our clients. Every step of the process is designed to involve your input, so the end product reflects your vision.' },
   { t: 'Trend-driven strategies', d: 'We stay at the forefront of digital trends, ensuring our clients are always ahead in terms of creativity and innovation.' },
 ];
 
-export const partners = [
-  { n: 'Maverick Lintan', r: 'Founder, CEO & Creative Director' },
-  { n: 'Zarmina Khan Naveed', r: 'Co-Owner & Ad Specialist' },
-  { n: 'Paula Andrade', r: 'CEO of EL Brand Singapore' },
-  { n: 'Atty. Agnes Botor', r: 'Legal Counsel' },
-  { n: 'Von Eric Ferrer', r: 'Sr. Developer & UI/UX Designer' },
-];
-
-export const creatives = [
-  { n: 'Lalaine Madriaga', r: 'Content Lead' },
-  { n: 'Caelle Muñoz', r: 'Content Strategist' },
-  { n: 'Mia Reyna', r: 'Content Strategist' },
-  { n: 'Zarka Naveed', r: 'Content Writer' },
-  { n: 'Jiselle Millente', r: 'Social Media Manager' },
-  { n: 'Gino Lopez', r: 'Creative Lead' },
-  { n: 'Riz Anyayahan', r: 'Sr. Multimedia Artist' },
-  { n: 'Joshua Solis', r: 'Sr. Multimedia Artist' },
-  { n: 'Shania Duay', r: 'Graphic Designer' },
-  { n: 'Misha Concepcion', r: 'Graphic Designer' },
-  { n: 'Lorraine Olilang', r: 'Multimedia Artist' },
+// Team: names, roles and portraits from the client's "ADS Team" Google Drive (2026-11-24).
+// `photo` matches a file in src/assets/team/ (no photo yet → monogram tile).
+export const team = [
+  { n: 'Maverick Lintan', r: 'Creative Director & Founder', photo: 'maverick' },
+  { n: 'Zarmina Khan Naveed', r: 'Operation Manager & Co-Owner', photo: 'zarmina' },
+  { n: 'Paula Andrade', r: 'CEO of EL Brand Singapore', photo: 'paula' },
+  { n: 'Gino Lopez', r: 'Art Director', photo: 'gino' },
+  { n: 'Lalaine Madriaga', r: 'Accounts Manager', photo: 'lalaine' },
+  { n: 'Lorraine Olilang', r: 'Social Media Manager', photo: 'lorraine' },
+  { n: 'Laira Yoo', r: 'PR & Events', photo: 'laira' },
+  { n: 'Caella Muñoz', r: 'Content Strategist' },
+  { n: 'Mia Reyna', r: 'Content Strategist', photo: 'mia' },
+  { n: 'Zarka Khan Naveed', r: 'Content Writer', photo: 'zarka' },
+  { n: 'Janmariz Anyayahan', r: 'Sr. Multimedia Artist', photo: 'janmariz' },
+  { n: 'Joshua Solis', r: 'Sr. Multimedia Artist', photo: 'joshua' },
+  { n: 'Misha Concepcion', r: 'Multimedia Artist', photo: 'misha' },
+  { n: 'Shania Duay', r: 'Multimedia Artist', photo: 'shania' },
 ];

@@ -18,5 +18,5 @@ export function initTouchCards() {
     (entries) => entries.forEach((e) => e.target.classList.toggle('is-active', e.isIntersecting)),
     { rootMargin: '-35% 0px -35% 0px' },
   );
-  document.querySelectorAll('.card').forEach((c) => io.observe(c));
+  document.querySelectorAll('.card, .member').forEach((c) => io.observe(c));
 }
