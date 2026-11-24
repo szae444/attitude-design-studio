@@ -3,6 +3,13 @@
 export const BOOKING_URL = '#contact';
 export const EMAIL = ''; // e.g. hello@yourdomain.com: leave empty to hide
 
+// Contact form. TODO(client): paste a form endpoint (Formspree / Web3Forms / Getform, etc.).
+// Until it's set, the form validates but tells the visitor it isn't connected yet.
+export const FORM_ENDPOINT = '';
+
+// TODO(client): confirm budget ranges.
+export const budgets = ['Below ₱50,000', '₱50,000 – ₱100,000', '₱100,000 – ₱250,000', '₱250,000 and up', 'Not sure yet'];
+
 export const socials = [
   { label: 'Instagram', icon: 'instagram', handle: '@attitudedesignstudio', href: 'https://www.instagram.com/attitudedesignstudio' },
   { label: 'Facebook', icon: 'facebook', handle: 'Attitude Design Studio', href: 'https://www.facebook.com/share/1D4LP7RkSY/' },

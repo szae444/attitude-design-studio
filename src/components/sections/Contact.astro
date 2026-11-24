@@ -1,21 +1,104 @@
 ---
-import Button from '../ui/Button.astro';
+/**
+ * Contact: an on-brand phone (the studio's feed, built from real work) beside a project-inquiry form.
+ * Every "Book a call" button lands here until a booking calendar is connected (BOOKING_URL).
+ */
+import { Image } from 'astro:assets';
 import SocialIcon from '../ui/SocialIcon.astro';
-import { BOOKING_URL, EMAIL, socials } from '../../data/site.js';
+import { BOOKING_URL, EMAIL, FORM_ENDPOINT, budgets, services, additionalServices, socials } from '../../data/site.js';
+import { img } from '../../data/images.js';
+
+const feed = ['guru', 'jillian', 'pickup', 'introCocktail', 'guruClock', 'trackday', 'duo', 'introFood', 'guruCard', 'team', 'introCafe', 'falken'];
+const inquiries = [...services, ...additionalServices].map((s) => s.title).concat('Something else');
+const ig = socials.find((s) => s.icon === 'instagram');
+const hasCalendar = !BOOKING_URL.startsWith('#');
 ---
 <section class="cta section wrap" id="contact">
-  <span class="label mute">/006 Let’s talk</span>
-  <h2 class="cta__title display" data-reveal>
-    <span class="mask"><span>Book a</span></span>
-    <span class="mask"><span><span class="serif">discovery</span> call</span></span>
-  </h2>
-  <div class="cta__row">
-    <p class="cta__p mute">Let’s talk strategy, align expectations, and build a proposal tailored to your business needs and budget.</p>
-    <div class="cta__actions">
-      <Button href={BOOKING_URL} size="lg">Book here</Button>
-      {EMAIL && <a href={`mailto:${EMAIL}`} class="link-u cta__mail">{EMAIL}</a>}
+  <div class="sec-head">
+    <span class="label">/006 Let’s talk</span>
+    <span class="label mute">Project inquiry</span>
+  </div>
+
+  <div class="cta__grid">
+    <!-- phone: the studio's feed, built from real client work -->
+    <div class="stage">
+      <div class="phone" aria-hidden="true">
+        <div class="phone__screen">
+          <span class="phone__island"></span>
+          <div class="ig">
+            <div class="ig__bar"><span>attitudedesignstudio</span><span class="ig__dots">•••</span></div>
+            <div class="ig__profile">
+              <span class="ig__av">ADS</span>
+              <div class="ig__who">
+                <b>Attitude Design Studio</b>
+                <span>Creative Department® · Est. 2019</span>
+              </div>
+            </div>
+            <span class="ig__follow">Follow</span>
+            <div class="ig__feed">
+              <div class="ig__track">
+                {[0, 1].map(() => (
+                  <div class="ig__grid">
+                    {feed.map((k) => <Image src={img[k]} alt="" widths={[160, 280]} sizes="110px" />)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href={ig.href} target="_blank" rel="noopener" class="stage__tag">
+        <SocialIcon name="instagram" /><span>{ig.handle}</span>
+      </a>
+    </div>
+
+    <!-- form -->
+    <div class="cta__main">
+      <h2 class="cta__title display" data-reveal>
+        Have a <span class="serif">vision?</span><br />Let’s make it <span class="serif">happen.</span>
+      </h2>
+      <p class="cta__p mute">Tell us about your brand. We’ll talk strategy, align expectations, and build a proposal tailored to your business needs and budget.</p>
+
+      <form class="form" method="POST" data-endpoint={FORM_ENDPOINT} novalidate>
+        <div class="f f--half"><label for="f-name" class="label">Name *</label><input id="f-name" name="name" autocomplete="name" required /></div>
+        <div class="f f--half"><label for="f-company" class="label">Company name *</label><input id="f-company" name="company" autocomplete="organization" required /></div>
+        <div class="f f--half"><label for="f-email" class="label">Email address *</label><input id="f-email" name="email" type="email" autocomplete="email" required /></div>
+        <div class="f f--half"><label for="f-country" class="label">Country *</label><input id="f-country" name="country" autocomplete="country-name" required /></div>
+        <div class="f"><label for="f-msg" class="label">Message *</label><textarea id="f-msg" name="message" rows="4" required></textarea></div>
+        <div class="f f--half f--sel">
+          <label for="f-inq" class="label">Inquiry *</label>
+          <select id="f-inq" name="inquiry" required>
+            <option value="" disabled selected>Select a service</option>
+            {inquiries.map((o) => <option>{o}</option>)}
+          </select>
+        </div>
+        <div class="f f--half f--sel">
+          <label for="f-budget" class="label">Budget *</label>
+          <select id="f-budget" name="budget" required>
+            <option value="" disabled selected>Select a range</option>
+            {budgets.map((o) => <option>{o}</option>)}
+          </select>
+        </div>
+        <input type="text" name="_gotcha" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="form__foot">
+          <p class="form__status label" role="status" aria-live="polite"></p>
+          <button type="submit" class="btn btn--solid form__submit">
+            <span>Submit inquiry</span>
+            <span class="btn__dot"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" /></svg></span>
+          </button>
+        </div>
+      </form>
+
+      {(hasCalendar || EMAIL) && (
+        <p class="cta__alt mute">
+          {hasCalendar && <>Prefer to talk? <a href={BOOKING_URL} class="link-u">Book a discovery call</a></>}
+          {hasCalendar && EMAIL && ' · '}
+          {EMAIL && <a href={`mailto:${EMAIL}`} class="link-u">{EMAIL}</a>}
+        </p>
+      )}
     </div>
   </div>
+
   <div class="follow">
     <p class="follow__txt">
       <span class="label mute">Follow the studio</span>
@@ -35,13 +118,132 @@ import { BOOKING_URL, EMAIL, socials } from '../../data/site.js';
 
 <style>
   .cta { padding-bottom: var(--s-9); }
-  .cta__title { font-size: clamp(3rem, 11.5vw, 14.5rem); margin-top: var(--s-6); display: flex; flex-direction: column; }
-  .cta__title > .mask:last-child { align-self: flex-end; }
-  .cta__title .mask { padding-bottom: 0.16em; margin-bottom: -0.16em; }
-  .cta__row { display: flex; justify-content: space-between; align-items: end; gap: var(--s-6); margin-top: var(--s-8); flex-wrap: wrap; }
-  .cta__p { max-width: 40ch; font-size: var(--t-md); line-height: 1.45; }
-  .cta__actions { display: flex; align-items: center; gap: var(--s-6); flex-wrap: wrap; }
-  .cta__mail { font-size: var(--t-md); }
+  .cta__grid {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 96px); align-items: stretch;
+  }
+
+  /* ── phone stage ── */
+  .stage {
+    position: relative; display: grid; place-items: center; overflow: hidden;
+    min-height: clamp(560px, 46vw, 760px); border-radius: var(--radius);
+    background:
+      radial-gradient(60% 50% at 50% 42%, rgba(251,250,247,.09), transparent 70%),
+      var(--ink-2);
+    border: 1px solid var(--line-d);
+  }
+  .phone {
+    --pw: clamp(232px, 19vw, 300px);
+    width: var(--pw); aspect-ratio: 9 / 19; padding: 9px;
+    border-radius: calc(var(--pw) * .16); background: #050505;
+    box-shadow: inset 0 0 0 1.5px #2a2a27, 0 0 0 1px #000, 0 40px 80px -24px rgba(0,0,0,.8);
+    transform: rotate(-4deg);
+    transition: transform 1.2s var(--ease);
+  }
+  .stage:hover .phone { transform: rotate(-1.5deg) translateY(-6px); }
+  .phone__screen {
+    position: relative; height: 100%; overflow: hidden;
+    border-radius: calc(var(--pw) * .135); background: var(--ink);
+  }
+  .phone__island {
+    position: absolute; z-index: 3; top: 9px; left: 50%; translate: -50% 0;
+    width: 32%; height: 22px; border-radius: 99px; background: #000;
+  }
+  .ig { display: flex; flex-direction: column; height: 100%; padding-top: 42px; font-family: var(--f-body); }
+  .ig__bar { display: flex; justify-content: space-between; align-items: center; padding: 0 14px 10px; font-size: 12px; font-weight: 600; letter-spacing: -0.01em; }
+  .ig__dots { font-size: 8px; letter-spacing: 1px; color: var(--mute-d); }
+  .ig__profile { display: flex; align-items: center; gap: 10px; padding: 4px 14px 10px; }
+  .ig__av {
+    display: grid; place-items: center; flex: none; width: 46px; height: 46px; border-radius: 50%;
+    background: var(--white); color: var(--ink);
+    font-family: var(--f-display); font-weight: 700; font-size: 12px; letter-spacing: -0.02em;
+    box-shadow: 0 0 0 2px var(--ink), 0 0 0 3.5px rgba(251,250,247,.5);
+  }
+  .ig__who { display: grid; gap: 2px; min-width: 0; }
+  .ig__who b { font-size: 11.5px; font-weight: 600; }
+  .ig__who span { font-size: 9.5px; color: var(--mute-d); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig__follow {
+    margin: 0 14px 12px; padding: 6px 0; border-radius: 8px; text-align: center;
+    background: var(--white); color: var(--ink); font-size: 11px; font-weight: 600;
+  }
+  .ig__feed { position: relative; flex: 1; overflow: hidden; }
+  .ig__track { animation: feed 38s linear infinite; }
+  .ig__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding-bottom: 2px; }
+  .ig__grid :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(1) contrast(1.05); transition: filter .8s var(--ease); }
+  .stage:hover .ig__grid :global(img) { filter: none; }
+  @keyframes feed { to { transform: translateY(-50%); } }
+
+  .stage__tag {
+    position: absolute; left: var(--s-4); bottom: var(--s-4);
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    padding: 8px 14px 8px 10px; border-radius: 999px;
+    background: rgba(251,250,247,.07); border: 1px solid rgba(251,250,247,.16);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    font-size: var(--t-sm); transition: background-color .4s var(--ease), color .4s var(--ease);
+  }
+  .stage__tag :global(svg) { width: 16px; height: 16px; }
+  @media (hover: hover) { .stage__tag:hover { background: var(--white); color: var(--ink); } }
+
+  /* ── form column ── */
+  .cta__main { display: flex; flex-direction: column; justify-content: center; }
+  .cta__title { font-size: clamp(2.6rem, 5.4vw, 6.2rem); line-height: 0.9; }
+  .cta__p { max-width: 46ch; margin-top: var(--s-5); font-size: var(--t-md); line-height: 1.45; }
+
+  .form {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-5) clamp(16px, 2vw, 32px); margin-top: clamp(32px, 4vw, 56px);
+  }
+  .f { grid-column: 1 / -1; display: grid; gap: var(--s-2); position: relative; }
+  .f--half { grid-column: span 1; }
+  .f label { color: var(--mute-d); transition: color .3s; }
+  .f:focus-within label { color: var(--white); }
+  .f input, .f textarea, .f select {
+    width: 100%; padding: 10px 0 12px;
+    font: inherit; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--white);
+    background: transparent; border: 0; border-bottom: 1px solid rgba(251,250,247,.22); border-radius: 0;
+    outline: none; transition: border-color .35s var(--ease);
+    -webkit-appearance: none; appearance: none;
+  }
+  .f textarea { resize: vertical; min-height: 104px; line-height: 1.5; }
+  .f input:hover, .f textarea:hover, .f select:hover { border-color: rgba(251,250,247,.45); }
+  .f input:focus, .f textarea:focus, .f select:focus { border-color: var(--white); }
+  .f select { cursor: pointer; padding-right: 28px; }
+  .f select:invalid { color: var(--mute-d); }
+  .f select option { background: var(--ink-2); color: var(--white); }
+  .f--sel::after {
+    content: ''; position: absolute; right: 4px; bottom: 20px; width: 7px; height: 7px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); pointer-events: none; color: var(--mute-d);
+  }
+  .f.is-err input, .f.is-err textarea, .f.is-err select { border-color: #e5877a; }
+  .f.is-err label { color: #e5877a; }
+
+  .form__foot { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); margin-top: var(--s-3); flex-wrap: wrap; }
+  .form__status { color: var(--mute-d); max-width: 40ch; }
+  .form__status:empty { display: none; }
+  .form__status.is-err { color: #e5877a; }
+  .form__submit { margin-left: auto; }
+  .form__submit[disabled] { opacity: .6; pointer-events: none; }
+  .form.is-sent .f, .form.is-sent .form__submit { display: none; }
+  .form.is-sent .form__status { color: var(--white); font-size: var(--t-sm); }
+
+  .cta__alt { margin-top: var(--s-6); font-size: var(--t-sm); }
+
+  @media (max-width: 1000px) {
+    .cta__grid { grid-template-columns: minmax(0, 1fr); }
+    .cta__main { order: -1; }
+    .stage { min-height: 0; padding-block: var(--s-8); }
+    .stage__tag { display: none; } /* the follow row sits right below on stacked layouts */
+  }
+  @media (max-width: 560px) {
+    .form { grid-template-columns: minmax(0, 1fr); }
+    .f--half { grid-column: 1 / -1; }
+    .form__submit { margin-left: 0; width: 100%; justify-content: space-between; }
+    .stage { padding-block: var(--s-7); }
+  }
+  @media (prefers-reduced-motion: reduce) { .ig__track { animation: none; } .phone { transition: none; } }
+
+  /* ── follow row ── */
   .follow {
     display: flex; justify-content: space-between; align-items: center; gap: var(--s-5);
     margin-top: var(--s-8); padding-top: var(--s-5); border-top: 1px solid var(--line-d);
