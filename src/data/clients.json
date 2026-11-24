@@ -188,5 +188,25 @@
   "name": "Wilcon",
   "file": "wilcon",
   "ratio": 6.222
+ },
+ {
+  "name": "Din Tai Fung",
+  "file": "din-tai-fung",
+  "ratio": 2.222
+ },
+ {
+  "name": "Falken",
+  "file": "falken",
+  "ratio": 8.967
+ },
+ {
+  "name": "Laundrybest",
+  "file": "laundrybest",
+  "ratio": 5.078
+ },
+ {
+  "name": "Atlas",
+  "file": "atlas",
+  "ratio": 2.094
  }
 ]
