@@ -112,7 +112,7 @@ export const team = [
   { n: 'Lalaine Madriaga', r: 'Accounts Manager', photo: 'lalaine' },
   { n: 'Lorraine Olilang', r: 'Social Media Manager', photo: 'lorraine' },
   { n: 'Laira Yoo', r: 'PR & Events', photo: 'laira' },
-  { n: 'Caella Muñoz', r: 'Content Strategist' },
+  { n: 'Caella Muñoz', r: 'Content Strategist', photo: 'caella' },
   { n: 'Mia Reyna', r: 'Content Strategist', photo: 'mia' },
   { n: 'Zarka Khan Naveed', r: 'Content Writer', photo: 'zarka' },
   { n: 'Janmariz Anyayahan', r: 'Sr. Multimedia Artist', photo: 'janmariz' },
