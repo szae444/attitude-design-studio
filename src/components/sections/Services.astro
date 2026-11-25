@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import SectionHead from '../ui/SectionHead.astro';
-import { services, additionalServices, BOOKING_URL } from '../../data/site.js';
+import { services, BOOKING_URL } from '../../data/site.js';
 import { img } from '../../data/images.js';
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -29,26 +29,6 @@ const previewKeys = [...new Set(services.map((s) => s.img))];
       </li>
     ))}
   </ol>
-
-  <div class="addon">
-    <div class="addon__head">
-      <span class="label">+ Additional services</span>
-      <p class="label mute">Add to any retainer</p>
-    </div>
-    <div class="addon__grid">
-      {additionalServices.map((a, i) => (
-        <article class="addon__card">
-          <div class="addon__top">
-            <span class="label mute">+{pad(services.length + i + 1)}</span>
-            <span class="label mute">{a.tag}</span>
-          </div>
-          <h3 class="addon__t">{a.title}</h3>
-          <p class="addon__p">{a.body}</p>
-          <a href={BOOKING_URL} class="link-u label addon__link">Ask about it →</a>
-        </article>
-      ))}
-    </div>
-  </div>
 
   <!-- desktop-only cursor preview -->
   <div class="svc__preview" aria-hidden="true">
@@ -91,25 +71,6 @@ const previewKeys = [...new Set(services.map((s) => s.img))];
   details[open] .svc__body { animation: open .6s var(--ease); }
   @keyframes open { from { opacity: 0; transform: translateY(-8px); } }
 
-  .addon { margin-top: clamp(72px, 8vw, 120px); }
-  .addon__head { display: flex; justify-content: space-between; gap: var(--s-4); padding-bottom: var(--s-4); }
-  .addon__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 20px); }
-  .addon__card {
-    display: flex; flex-direction: column; gap: var(--s-5);
-    padding: clamp(24px, 2.6vw, 40px); border-radius: var(--radius);
-    border: 1px solid var(--line-d); background: var(--ink-2);
-    transition: border-color .4s var(--ease), background-color .4s var(--ease);
-  }
-  @media (hover: hover) { .addon__card:hover { border-color: rgba(251,250,247,.3); background: var(--ink-3); } }
-  .addon__top { display: flex; justify-content: space-between; gap: var(--s-4); }
-  .addon__t {
-    margin-top: clamp(24px, 4vw, 56px);
-    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.75rem, 3.2vw, 3rem); line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase;
-  }
-  .addon__p { color: rgba(251,250,247,.75); font-size: 1.0625rem; max-width: 52ch; }
-  .addon__link { margin-top: auto; align-self: flex-start; padding-top: var(--s-3); }
-  @media (max-width: 760px) { .addon__grid { grid-template-columns: minmax(0, 1fr); } .addon__p { font-size: 1rem; } }
 
   .svc__preview {
     position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
