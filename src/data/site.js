@@ -32,7 +32,6 @@ export const founder = {
 
 export const nav = [
   { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
   { label: 'Why us', href: '#why' },
   { label: 'Studio', href: '#studio' },
 ];
@@ -90,14 +89,6 @@ export const additionalServices = [
     tag: 'Short-form video',
     body: 'We create trend-driven content tailored for TikTok. From content strategy to creative production and account management, we help your brand stay relevant, reach new audiences, and drive engagement through impactful short-form videos.',
   },
-];
-
-export const work = [
-  { title: 'GURU', kind: 'Brand Identity', img: 'guru', size: 'wide' },
-  { title: 'Hardcore Trackday', kind: 'Content Production', img: 'trackday', size: 'tall' },
-  { title: 'Falken Tire', kind: 'Studio Shoot', img: 'falken', size: 'wide' },
-  { title: 'Pick-up Coffee', kind: 'Ad Campaign', img: 'pickup', size: 'tall' },
-  { title: 'Jillian Ward', kind: 'Ad Launch', img: 'jillian', size: 'tall' },
 ];
 
 export const usps = [
