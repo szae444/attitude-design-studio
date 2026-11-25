@@ -32,6 +32,7 @@ export const founder = {
 
 export const nav = [
   { label: 'Services', href: '#services' },
+  { label: 'Additional services', href: '#additional' },
   { label: 'Why us', href: '#why' },
   { label: 'Studio', href: '#studio' },
 ];

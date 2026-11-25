@@ -22,8 +22,9 @@ export function initAnchors(lenis, onNavigate) {
       if (target === null) return;
       e.preventDefault();
       if (onNavigate) onNavigate();
-      if (lenis) lenis.scrollTo(target, { duration: 1.4 });
-      else window.scrollTo({ top: target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY });
+      const offset = target === 0 ? 0 : -(parseFloat(getComputedStyle(target).scrollMarginTop) || 0);
+      if (lenis) lenis.scrollTo(target, { duration: 1.4, offset });
+      else window.scrollTo({ top: target === 0 ? 0 : target.getBoundingClientRect().top + window.scrollY + offset });
     });
   });
 }
