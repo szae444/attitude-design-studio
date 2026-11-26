@@ -6,6 +6,7 @@ import { initHero } from './modules/hero.js';
 import { initReveals, initTouchCards } from './modules/reveal.js';
 import { initServicePreview } from './modules/services.js';
 import { initForm } from './modules/form.js';
+import { initProjects } from './modules/projects.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,7 @@ initReveals(reduce);
 initTouchCards();
 initServicePreview(reduce);
 initForm();
+initProjects(lenis);
 
 // Re-measure once images and fonts settle (avoids misplaced triggers on slow mobile networks).
 window.addEventListener('load', () => ScrollTrigger.refresh());

@@ -35,6 +35,7 @@ export const nav = [
   { label: 'Additional services', href: '#additional' },
   { label: 'Why us', href: '#why' },
   { label: 'Studio', href: '#studio' },
+  { label: 'Projects', href: '#projects' },
 ];
 
 // Client logos: see src/data/clients.json + src/assets/clients/
