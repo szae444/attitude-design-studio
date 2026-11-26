@@ -1,0 +1,50 @@
+---
+/**
+ * Moving photo wall: every project photo in `cols` columns. Each column is an endless belt
+ * (content rendered twice, CSS slides it by exactly one copy), neighbouring columns run in opposite
+ * directions at slightly different speeds. Hovering pauses it so a frame can be looked at.
+ */
+import { Image } from 'astro:assets';
+import { mosaicColumns } from '../../data/projects.js';
+
+interface Props { cols: number; sizes: string; class?: string }
+const { cols, sizes, class: cls = '' } = Astro.props;
+
+const files = import.meta.glob('../../assets/projects/*/*.jpg', { eager: true });
+const photo = (slug, n) => files[`../../assets/projects/${slug}/${String(n).padStart(2, '0')}.jpg`].default;
+const columns = mosaicColumns(cols);
+const speeds = [104, 128, 116, 136, 110, 124];
+---
+<div class:list={['mz', cls]} style={`--cols:${cols}`} aria-hidden="true">
+  {columns.map((col, i) => (
+    <div class="mz__col">
+      <div class="mz__belt" style={`--dur:${Math.round(speeds[i % speeds.length] * col.length / 20)}s`} data-dir={i % 2 ? 'down' : 'up'}>
+        {[0, 1].map(() => col.map(([slug, n]) => (
+          <div class="mz__tile"><Image src={photo(slug, n)} alt="" widths={[240, 420]} sizes={sizes} loading="lazy" decoding="async" /></div>
+        )))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .mz {
+    --gap: clamp(6px, .55vw, 10px);
+    display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: var(--gap);
+    height: 100%; overflow: hidden;
+  }
+  .mz__col { position: relative; overflow: hidden; height: 100%; }
+  /* stagger every other column by half a tile so the rows never line up (as in the reference) */
+  .mz__col:nth-child(even) .mz__belt { margin-top: -38%; }
+  .mz__belt { display: flex; flex-direction: column; gap: var(--gap); will-change: transform; animation: mz-up var(--dur) linear infinite; }
+  .mz__belt[data-dir='down'] { animation-name: mz-down; }
+  .mz:hover .mz__belt { animation-play-state: paused; }
+  .mz__tile { flex: 0 0 auto; aspect-ratio: 4 / 5; overflow: hidden; border-radius: calc(var(--radius) * .35); background: var(--paper-2); }
+  .mz__tile :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* one copy = half the belt (gap included, since the gap after the last tile is mirrored by margin) */
+  @keyframes mz-up { from { transform: translateY(0); } to { transform: translateY(calc(-50% - var(--gap) / 2)); } }
+  @keyframes mz-down { from { transform: translateY(calc(-50% - var(--gap) / 2)); } to { transform: translateY(0); } }
+
+  @media (prefers-reduced-motion: reduce) { .mz__belt { animation: none; } }
+</style>

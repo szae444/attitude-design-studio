@@ -1,4 +1,4 @@
-/** Mobile/tablet overlay menu: toggle, Esc to close, closes on link tap, pauses scrolling while open. */
+/** Overlay menu (all screen sizes): toggle, Esc to close, closes on link tap, pauses scrolling while open. */
 export function initMenu(lenis) {
   const btn = document.querySelector('.nav__menu');
   const menu = document.getElementById('menu');
@@ -22,6 +22,5 @@ export function initMenu(lenis) {
 
   btn.addEventListener('click', () => set(!root.classList.contains('menu-open')));
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  window.matchMedia('(min-width: 901px)').addEventListener('change', (m) => { if (m.matches) close(); });
   return close;
 }

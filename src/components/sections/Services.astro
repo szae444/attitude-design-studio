@@ -1,11 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import SectionHead from '../ui/SectionHead.astro';
 import { services, additionalServices, BOOKING_URL } from '../../data/site.js';
-import { img } from '../../data/images.js';
 
 const pad = (n) => String(n).padStart(2, '0');
-const previewKeys = [...new Set(services.map((s) => s.img))];
 ---
 <section class="services section wrap" id="services">
   <SectionHead index="002" label="Services" aside="Everything under one roof" />
@@ -13,7 +10,7 @@ const previewKeys = [...new Set(services.map((s) => s.img))];
 
   <ol class="svc">
     {services.map((s, i) => (
-      <li class="svc__item" data-img={s.img}>
+      <li class="svc__item">
         <details>
           <summary class="svc__row">
             <span class="svc__n label">{pad(i + 1)}</span>
@@ -28,32 +25,33 @@ const previewKeys = [...new Set(services.map((s) => s.img))];
         </details>
       </li>
     ))}
-  </ol>
-
-  <div class="addon" id="additional">
-    <div class="addon__head">
-      <span class="label">+ Additional services</span>
-      <p class="label mute">Add to any retainer</p>
-    </div>
-    <div class="addon__grid">
-      {additionalServices.map((a, i) => (
-        <article class="addon__card">
-          <div class="addon__top">
-            <span class="label mute">+{pad(services.length + i + 1)}</span>
-            <span class="label mute">{a.tag}</span>
+    <!-- 07: add-ons that sit on top of any retainer -->
+    <li class="svc__item" id="additional">
+      <details>
+        <summary class="svc__row">
+          <span class="svc__n label">{pad(services.length + 1)}</span>
+          <span class="svc__t">Additional Services</span>
+          <span class="svc__tag label mute">Add to any retainer</span>
+          <span class="svc__plus" aria-hidden="true"></span>
+        </summary>
+        <div class="svc__body">
+          <div class="svc__subs">
+            {additionalServices.map((a, i) => (
+              <div class="svc__sub">
+                <div class="svc__sub-top">
+                  <span class="label mute">{pad(services.length + 1)}.{i + 1}</span>
+                  <span class="label mute">{a.tag}</span>
+                </div>
+                <h3 class="svc__sub-t">{a.title}</h3>
+                <p>{a.body}</p>
+              </div>
+            ))}
           </div>
-          <h3 class="addon__t">{a.title}</h3>
-          <p class="addon__p">{a.body}</p>
-          <a href={BOOKING_URL} class="link-u label addon__link">Ask about it →</a>
-        </article>
-      ))}
-    </div>
-  </div>
-
-  <!-- desktop-only cursor preview -->
-  <div class="svc__preview" aria-hidden="true">
-    {previewKeys.map((k) => <Image src={img[k]} alt="" data-key={k} widths={[300, 560]} sizes="280px" />)}
-  </div>
+          <a href={BOOKING_URL} class="svc__price link-u label">Ask about it →</a>
+        </div>
+      </details>
+    </li>
+  </ol>
 </section>
 
 <style>
@@ -91,33 +89,17 @@ const previewKeys = [...new Set(services.map((s) => s.img))];
   details[open] .svc__body { animation: open .6s var(--ease); }
   @keyframes open { from { opacity: 0; transform: translateY(-8px); } }
 
-  .addon { margin-top: clamp(72px, 8vw, 120px); scroll-margin-top: 96px; }
-  .addon__head { display: flex; justify-content: space-between; gap: var(--s-4); padding-bottom: var(--s-4); }
-  .addon__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 20px); }
-  .addon__card {
-    display: flex; flex-direction: column; gap: var(--s-5);
-    padding: clamp(24px, 2.6vw, 40px); border-radius: var(--radius);
-    border: 1px solid var(--line-d); background: var(--ink-2);
-    transition: border-color .4s var(--ease), background-color .4s var(--ease);
+  /* 07 Additional Services: two add-ons side by side inside the row */
+  #additional { scroll-margin-top: 96px; }
+  .svc__subs { grid-column: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 56px); }
+  .svc__sub { display: flex; flex-direction: column; gap: var(--s-3); padding-top: var(--s-4); border-top: 1px solid var(--line-d); }
+  .svc__sub-top { display: flex; justify-content: space-between; gap: var(--s-4); }
+  .svc__sub-t {
+    margin: var(--s-2) 0 0; font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
+    font-size: clamp(1.3rem, 2vw, 1.9rem); line-height: 1; letter-spacing: -0.04em; text-transform: uppercase;
   }
-  @media (hover: hover) { .addon__card:hover { border-color: rgba(251,250,247,.3); background: var(--ink-3); } }
-  .addon__top { display: flex; justify-content: space-between; gap: var(--s-4); }
-  .addon__t {
-    margin-top: clamp(24px, 4vw, 56px);
-    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.75rem, 3.2vw, 3rem); line-height: 0.95; letter-spacing: -0.04em; text-transform: uppercase;
-  }
-  .addon__p { color: rgba(251,250,247,.75); font-size: 1.0625rem; max-width: 52ch; }
-  .addon__link { margin-top: auto; align-self: flex-start; padding-top: var(--s-3); }
-  @media (max-width: 760px) { .addon__grid { grid-template-columns: minmax(0, 1fr); } .addon__p { font-size: 1rem; } }
-
-  .svc__preview {
-    position: fixed; left: 0; top: 0; z-index: 40; pointer-events: none;
-    width: 280px; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; opacity: 0;
-  }
-  .svc__preview :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .35s; }
-  .svc__preview :global(img.on) { opacity: 1; }
-  @media (hover: none), (max-width: 900px) { .svc__preview { display: none; } }
+  .svc__body .svc__sub p { grid-column: auto; max-width: 52ch; }
+  @media (max-width: 760px) { .svc__subs { grid-template-columns: minmax(0, 1fr); } }
 
   @media (max-width: 680px) {
     .svc__row { grid-template-columns: 28px minmax(0, 1fr) 22px; gap: var(--s-3); }

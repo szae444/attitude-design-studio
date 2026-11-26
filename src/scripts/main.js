@@ -4,7 +4,7 @@ import { initSmoothScroll, initAnchors } from './modules/smooth.js';
 import { initMenu } from './modules/menu.js';
 import { initHero } from './modules/hero.js';
 import { initReveals, initTouchCards } from './modules/reveal.js';
-import { initServicePreview } from './modules/services.js';
+import { initServices } from './modules/services.js';
 import { initForm } from './modules/form.js';
 import { initProjects } from './modules/projects.js';
 
@@ -18,9 +18,9 @@ initAnchors(lenis, closeMenu);
 initHero(reduce);
 initReveals(reduce);
 initTouchCards();
-initServicePreview(reduce);
+initServices();
 initForm();
-initProjects(lenis);
+initProjects();
 
 // Re-measure once images and fonts settle (avoids misplaced triggers on slow mobile networks).
 window.addEventListener('load', () => ScrollTrigger.refresh());

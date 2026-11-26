@@ -2,7 +2,11 @@
 import Logo from '../Logo.astro';
 import Button from '../ui/Button.astro';
 import SocialIcon from '../ui/SocialIcon.astro';
-import { nav, socials, BOOKING_URL } from '../../data/site.js';
+import { nav, socials, additionalServices, services, BOOKING_URL } from '../../data/site.js';
+
+// The menu lists the main sections; additional services get their own block beside them.
+const menuLinks = [...nav.filter((l) => l.href !== '#additional'), { label: 'Contact', href: '#contact' }];
+const pad = (n) => String(n).padStart(2, '0');
 ---
 <header class="nav wrap">
   <a href="#top" class="nav__logo" aria-label="Attitude Design Studio, back to top"><Logo size="sm" /></a>
@@ -18,18 +22,35 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
   </div>
 </header>
 
-<!-- Mobile / tablet menu (outside the blended header so colours stay true) -->
-<div id="menu" class="menu" aria-label="Menu" aria-hidden="true">
-  <nav class="menu__links wrap" aria-label="Mobile">
-    {nav.map((l, i) => (
-      <a href={l.href} class="menu__link"><span class="label mute">0{i + 1}</span><span>{l.label}</span></a>
-    ))}
-    <a href="#contact" class="menu__link"><span class="label mute">0{nav.length + 1}</span><span>Contact</span></a>
-  </nav>
-  <div class="menu__foot wrap">
-    <Button href={BOOKING_URL}>Book a discovery call</Button>
-    <p class="menu__social">{socials.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><SocialIcon name={s.icon} /></a>)}</p>
-    <p class="label mute">Attitude Design Studio® · Est. 2019</p>
+<!-- Overlay menu, desktop and mobile (outside the blended header so colours stay true) -->
+<div id="menu" class="menu" aria-label="Menu" aria-hidden="true" data-lenis-prevent>
+  <div class="menu__inner wrap">
+    <nav class="menu__links" aria-label="Menu">
+      {menuLinks.map((l, i) => (
+        <a href={l.href} class="menu__link"><span class="label mute">{pad(i + 1)}</span><span>{l.label}</span></a>
+      ))}
+    </nav>
+
+    <aside class="menu__side">
+      <div class="menu__add">
+        <div class="menu__add-head">
+          <span class="label">+ Additional services</span>
+          <span class="label mute">Add to any retainer</span>
+        </div>
+        {additionalServices.map((a, i) => (
+          <a href="#additional" class="menu__svc">
+            <span class="label mute">{pad(services.length + 1)}.{i + 1}</span>
+            <span class="menu__svc-t">{a.title}</span>
+            <span class="label mute menu__svc-tag">{a.tag}</span>
+          </a>
+        ))}
+      </div>
+      <div class="menu__foot">
+        <Button href={BOOKING_URL}>Book a discovery call</Button>
+        <p class="menu__social">{socials.map((s) => <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}><SocialIcon name={s.icon} /></a>)}</p>
+        <p class="label mute">Attitude Design Studio® · Est. 2019</p>
+      </div>
+    </aside>
   </div>
 </div>
 
@@ -46,7 +67,7 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
   .nav__end { justify-self: end; display: flex; align-items: center; gap: var(--s-3); }
 
   .nav__menu {
-    display: none; align-items: center; gap: var(--s-3);
+    display: inline-flex; align-items: center; gap: var(--s-3); color: inherit; background: none; cursor: pointer;
     height: 46px; padding: 0 var(--s-4) 0 var(--s-5); border-radius: 999px;
     border: 1px solid rgba(251, 250, 247, 0.4);
     font-size: var(--t-sm); font-weight: 500;
@@ -61,14 +82,13 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
   @media (max-width: 900px) {
     .nav { grid-template-columns: 1fr auto; }
     .nav__links { display: none; }
-    .nav__menu { display: inline-flex; }
   }
   @media (max-width: 520px) { .nav__end :global(.nav__cta) { display: none; } }
 
   /* ── overlay menu ── */
   .menu {
     position: fixed; inset: 0; z-index: 55;
-    display: flex; flex-direction: column; justify-content: space-between;
+    overflow-y: auto; overscroll-behavior: contain;
     padding-top: 110px; padding-bottom: var(--s-6);
     background: var(--ink); color: var(--white);
     clip-path: inset(0 0 100% 0);
@@ -76,23 +96,57 @@ import { nav, socials, BOOKING_URL } from '../../data/site.js';
     visibility: hidden;
   }
   :global(.menu-open) .menu { clip-path: inset(0 0 0 0); visibility: visible; }
-  .menu__links { display: flex; flex-direction: column; }
+  .menu__inner { display: flex; flex-direction: column; gap: var(--s-8, 56px); min-height: 100%; }
+  .menu__links { display: flex; flex-direction: column; border-top: 1px solid var(--line-d); }
+  .menu__link, .menu__svc, .menu__foot {
+    transform: translateY(24px); opacity: 0;
+    transition: transform .8s var(--ease), opacity .6s var(--ease), color .3s;
+  }
+  :global(.menu-open) :is(.menu__link, .menu__svc, .menu__foot) { transform: none; opacity: 1; }
+  :global(.menu-open) .menu__link:nth-child(2) { transition-delay: .05s; }
+  :global(.menu-open) .menu__link:nth-child(3) { transition-delay: .1s; }
+  :global(.menu-open) .menu__link:nth-child(4) { transition-delay: .15s; }
+  :global(.menu-open) .menu__link:nth-child(5) { transition-delay: .2s; }
+  :global(.menu-open) .menu__svc { transition-delay: .2s; }
+  :global(.menu-open) .menu__svc:last-child { transition-delay: .26s; }
+  :global(.menu-open) .menu__foot { transition-delay: .3s; }
   .menu__link {
     display: flex; align-items: baseline; gap: var(--s-4);
     padding-block: var(--s-3); border-bottom: 1px solid var(--line-d);
     font-family: var(--f-display); font-weight: 300; font-variation-settings: 'wdth' 106;
     font-size: clamp(2.6rem, 11vw, 5rem); line-height: 1; letter-spacing: -0.045em; text-transform: uppercase;
-    transform: translateY(24px); opacity: 0;
-    transition: transform .8s var(--ease), opacity .6s var(--ease);
   }
-  :global(.menu-open) .menu__link { transform: none; opacity: 1; }
-  :global(.menu-open) .menu__link:nth-child(2) { transition-delay: .05s; }
-  :global(.menu-open) .menu__link:nth-child(3) { transition-delay: .1s; }
-  :global(.menu-open) .menu__link:nth-child(4) { transition-delay: .15s; }
-  :global(.menu-open) .menu__link:nth-child(5) { transition-delay: .2s; }
+
+  /* additional services block */
+  .menu__side { display: flex; flex-direction: column; gap: var(--s-7); }
+  .menu__add { display: flex; flex-direction: column; }
+  .menu__add-head { display: flex; justify-content: space-between; gap: var(--s-4); padding-bottom: var(--s-4); border-bottom: 1px solid var(--line-d); }
+  .menu__svc {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: baseline; gap: var(--s-3);
+    padding-block: var(--s-4); border-bottom: 1px solid var(--line-d);
+  }
+  .menu__svc-t {
+    font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
+    font-size: clamp(1.5rem, 2.4vw, 2.2rem); line-height: 1; letter-spacing: -0.04em; text-transform: uppercase;
+  }
+  .menu__svc-tag { white-space: nowrap; }
+
   .menu__social { display: flex; gap: var(--s-3); }
   .menu__social a { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-d); }
   .menu__social :global(svg) { width: 20px; height: 20px; }
   .menu__foot { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-5); }
-  @media (min-width: 901px) { .menu { display: none; } }
+
+  @media (hover: hover) {
+    .menu__links:hover .menu__link, .menu__add:hover .menu__svc { color: var(--mute-d); }
+    .menu__links .menu__link:hover, .menu__add .menu__svc:hover { color: var(--white); }
+  }
+
+  /* desktop: main sections left, additional services + contact right */
+  @media (min-width: 901px) {
+    .menu { padding-top: clamp(96px, 13vh, 132px); padding-bottom: clamp(28px, 4vh, 48px); }
+    .menu__inner { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(48px, 6vw, 120px); align-items: start; }
+    .menu__link { font-size: min(5.4rem, 8.6vh); padding-block: min(var(--s-3), 1.6vh); }
+    .menu__side { height: 100%; justify-content: space-between; }
+  }
+  @media (max-width: 520px) { .menu__svc { grid-template-columns: 34px minmax(0, 1fr); } .menu__svc-tag { display: none; } }
 </style>
