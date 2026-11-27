@@ -22,8 +22,8 @@ for (const dir of fs.readdirSync(src)) {
   for (const f of files) {
     i++;
     const dest = path.join(out, slug, String(i).padStart(2, '0') + '.jpg');
-    const meta = await sharp(path.join(src, dir, f)).rotate().resize({ width: 1600, height: 1600, fit: 'inside', withoutEnlargement: true })
-      .jpeg({ quality: 80, mozjpeg: true }).toFile(dest);
+    const meta = await sharp(path.join(src, dir, f)).rotate().resize({ width: 2000, height: 2000, fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 90, mozjpeg: true }).toFile(dest);
     console.log(slug, i, f, `${meta.width}x${meta.height}`);
   }
 }

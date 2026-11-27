@@ -2,10 +2,10 @@
 import Logo from '../Logo.astro';
 import Button from '../ui/Button.astro';
 import SocialIcon from '../ui/SocialIcon.astro';
-import { nav, socials, additionalServices, services, BOOKING_URL } from '../../data/site.js';
+import { nav, socials, services, BOOKING_URL } from '../../data/site.js';
 
-// The menu lists the main sections; additional services get their own block beside them.
-const menuLinks = [...nav.filter((l) => l.href !== '#additional'), { label: 'Contact', href: '#contact' }];
+// The menu lists the main sections; every service (01–08) sits in a compact list beside them.
+const menuLinks = [...nav, { label: 'Contact', href: '#contact' }];
 const pad = (n) => String(n).padStart(2, '0');
 ---
 <header class="nav wrap">
@@ -34,14 +34,13 @@ const pad = (n) => String(n).padStart(2, '0');
     <aside class="menu__side">
       <div class="menu__add">
         <div class="menu__add-head">
-          <span class="label">+ Additional services</span>
-          <span class="label mute">Add to any retainer</span>
+          <span class="label">What we do</span>
+          <span class="label mute">{pad(services.length)} services</span>
         </div>
-        {additionalServices.map((a, i) => (
-          <a href="#additional" class="menu__svc">
-            <span class="label mute">{pad(services.length + 1)}.{i + 1}</span>
+        {services.map((a, i) => (
+          <a href="#services" class="menu__svc">
+            <span class="label mute">{pad(i + 1)}</span>
             <span class="menu__svc-t">{a.title}</span>
-            <span class="label mute menu__svc-tag">{a.tag}</span>
           </a>
         ))}
       </div>
@@ -108,7 +107,6 @@ const pad = (n) => String(n).padStart(2, '0');
   :global(.menu-open) .menu__link:nth-child(4) { transition-delay: .15s; }
   :global(.menu-open) .menu__link:nth-child(5) { transition-delay: .2s; }
   :global(.menu-open) .menu__svc { transition-delay: .2s; }
-  :global(.menu-open) .menu__svc:last-child { transition-delay: .26s; }
   :global(.menu-open) .menu__foot { transition-delay: .3s; }
   .menu__link {
     display: flex; align-items: baseline; gap: var(--s-4);
@@ -117,19 +115,18 @@ const pad = (n) => String(n).padStart(2, '0');
     font-size: clamp(2.6rem, 11vw, 5rem); line-height: 1; letter-spacing: -0.045em; text-transform: uppercase;
   }
 
-  /* additional services block */
+  /* services list */
   .menu__side { display: flex; flex-direction: column; gap: var(--s-7); }
   .menu__add { display: flex; flex-direction: column; }
   .menu__add-head { display: flex; justify-content: space-between; gap: var(--s-4); padding-bottom: var(--s-4); border-bottom: 1px solid var(--line-d); }
   .menu__svc {
-    display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: baseline; gap: var(--s-3);
-    padding-block: var(--s-4); border-bottom: 1px solid var(--line-d);
+    display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: baseline; gap: var(--s-3);
+    padding-block: min(var(--s-3), 1.5vh); border-bottom: 1px solid var(--line-d);
   }
   .menu__svc-t {
     font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.5rem, 2.4vw, 2.2rem); line-height: 1; letter-spacing: -0.04em; text-transform: uppercase;
+    font-size: clamp(1.05rem, 1.35vw, 1.3rem); line-height: 1.1; letter-spacing: -0.04em; text-transform: uppercase;
   }
-  .menu__svc-tag { white-space: nowrap; }
 
   .menu__social { display: flex; gap: var(--s-3); }
   .menu__social a { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-d); }
@@ -141,12 +138,11 @@ const pad = (n) => String(n).padStart(2, '0');
     .menu__links .menu__link:hover, .menu__add .menu__svc:hover { color: var(--white); }
   }
 
-  /* desktop: main sections left, additional services + contact right */
+  /* desktop: main sections left, services list + contact right */
   @media (min-width: 901px) {
     .menu { padding-top: clamp(96px, 13vh, 132px); padding-bottom: clamp(28px, 4vh, 48px); }
     .menu__inner { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(48px, 6vw, 120px); align-items: start; }
     .menu__link { font-size: min(5.4rem, 8.6vh); padding-block: min(var(--s-3), 1.6vh); }
     .menu__side { height: 100%; justify-content: space-between; }
   }
-  @media (max-width: 520px) { .menu__svc { grid-template-columns: 34px minmax(0, 1fr); } .menu__svc-tag { display: none; } }
 </style>

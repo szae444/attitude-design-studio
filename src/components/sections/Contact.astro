@@ -4,9 +4,9 @@
  * Every "Book a call" button lands here until a booking calendar is connected (BOOKING_URL).
  */
 import SocialIcon from '../ui/SocialIcon.astro';
-import { BOOKING_URL, EMAIL, FORM_ENDPOINT, budgets, services, additionalServices, socials } from '../../data/site.js';
+import { BOOKING_URL, EMAIL, FORM_ENDPOINT, budgets, services, socials } from '../../data/site.js';
 
-const inquiries = [...services, ...additionalServices].map((s) => s.title).concat('Something else');
+const inquiries = services.map((s) => s.title).concat('Something else');
 const hasCalendar = !BOOKING_URL.startsWith('#');
 ---
 <section class="cta section wrap" id="contact">

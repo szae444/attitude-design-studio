@@ -20,7 +20,7 @@ const speeds = [104, 128, 116, 136, 110, 124];
     <div class="mz__col">
       <div class="mz__belt" style={`--dur:${Math.round(speeds[i % speeds.length] * col.length / 20)}s`} data-dir={i % 2 ? 'down' : 'up'}>
         {[0, 1].map(() => col.map(([slug, n]) => (
-          <div class="mz__tile"><Image src={photo(slug, n)} alt="" widths={[240, 420]} sizes={sizes} loading="lazy" decoding="async" /></div>
+          <div class="mz__tile"><Image src={photo(slug, n)} alt="" widths={[320, 480, 720, 960]} sizes={sizes} quality={88} loading="lazy" decoding="async" /></div>
         )))}
       </div>
     </div>

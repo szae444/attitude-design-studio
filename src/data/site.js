@@ -32,7 +32,6 @@ export const founder = {
 
 export const nav = [
   { label: 'Services', href: '#services' },
-  { label: 'Additional services', href: '#additional' },
   { label: 'Why us', href: '#why' },
   { label: 'Studio', href: '#studio' },
   { label: 'Projects', href: '#projects' },
@@ -77,10 +76,6 @@ export const services = [
     body: 'Customizable marketing collaterals and social media templates that keep your brand’s communication consistent and professional, and streamline content creation while maintaining a cohesive visual identity.',
     img: 'guruCard',
   },
-];
-
-// Add-ons that sit on top of any retainer
-export const additionalServices = [
   {
     title: 'KOL Management',
     tag: 'Influencers & creators',

@@ -1,6 +1,6 @@
 ---
 import SectionHead from '../ui/SectionHead.astro';
-import { services, additionalServices, BOOKING_URL } from '../../data/site.js';
+import { services, BOOKING_URL } from '../../data/site.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 ---
@@ -25,32 +25,6 @@ const pad = (n) => String(n).padStart(2, '0');
         </details>
       </li>
     ))}
-    <!-- 07: add-ons that sit on top of any retainer -->
-    <li class="svc__item" id="additional">
-      <details>
-        <summary class="svc__row">
-          <span class="svc__n label">{pad(services.length + 1)}</span>
-          <span class="svc__t">Additional Services</span>
-          <span class="svc__tag label mute">Add to any retainer</span>
-          <span class="svc__plus" aria-hidden="true"></span>
-        </summary>
-        <div class="svc__body">
-          <div class="svc__subs">
-            {additionalServices.map((a, i) => (
-              <div class="svc__sub">
-                <div class="svc__sub-top">
-                  <span class="label mute">{pad(services.length + 1)}.{i + 1}</span>
-                  <span class="label mute">{a.tag}</span>
-                </div>
-                <h3 class="svc__sub-t">{a.title}</h3>
-                <p>{a.body}</p>
-              </div>
-            ))}
-          </div>
-          <a href={BOOKING_URL} class="svc__price link-u label">Ask about it →</a>
-        </div>
-      </details>
-    </li>
   </ol>
 </section>
 
@@ -88,18 +62,6 @@ const pad = (n) => String(n).padStart(2, '0');
   .svc__price { grid-column: 3; align-self: end; white-space: nowrap; }
   details[open] .svc__body { animation: open .6s var(--ease); }
   @keyframes open { from { opacity: 0; transform: translateY(-8px); } }
-
-  /* 07 Additional Services: two add-ons side by side inside the row */
-  #additional { scroll-margin-top: 96px; }
-  .svc__subs { grid-column: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 56px); }
-  .svc__sub { display: flex; flex-direction: column; gap: var(--s-3); padding-top: var(--s-4); border-top: 1px solid var(--line-d); }
-  .svc__sub-top { display: flex; justify-content: space-between; gap: var(--s-4); }
-  .svc__sub-t {
-    margin: var(--s-2) 0 0; font-family: var(--f-display); font-weight: 400; font-variation-settings: 'wdth' 100;
-    font-size: clamp(1.3rem, 2vw, 1.9rem); line-height: 1; letter-spacing: -0.04em; text-transform: uppercase;
-  }
-  .svc__body .svc__sub p { grid-column: auto; max-width: 52ch; }
-  @media (max-width: 760px) { .svc__subs { grid-template-columns: minmax(0, 1fr); } }
 
   @media (max-width: 680px) {
     .svc__row { grid-template-columns: 28px minmax(0, 1fr) 22px; gap: var(--s-3); }

@@ -23,7 +23,7 @@ const total = projects.reduce((a, p) => a + p.count, 0);
       <span class="label mute">{projects.length} brands · {total} frames</span>
     </div>
     <h2 class="pj__mtitle display" data-reveal>Selected <span class="serif">projects</span></h2>
-    <div class="pj__mwall"><Mosaic cols={3} sizes="(max-width: 900px) 31vw, 1px" /></div>
+    <div class="pj__mwall"><Mosaic cols={3} sizes="(max-width: 900px) 33vw, 1px" /></div>
   </div>
 
   <div class="pj__track" tabindex="0" aria-label="Projects, scroll sideways">
@@ -42,14 +42,14 @@ const total = projects.reduce((a, p) => a + p.count, 0);
 
     <!-- every frame, always moving -->
     <div class="pj__panel pj__wall">
-      <Mosaic cols={7} sizes="(min-width: 901px) 11vw, 1px" />
+      <Mosaic cols={7} sizes="(min-width: 901px) 15vw, 1px" />
     </div>
 
     <!-- one cover per client -->
     {projects.map((p, i) => (
       <article class="pj__panel pj__item" aria-label={`Project ${pad(i + 1)}: ${p.kind}`}>
         <div class="pj__frame">
-          <Image src={photo(p.slug, p.cover)} alt={`${p.kind} shoot`} widths={[400, 640, 900, 1200]} sizes="(min-width: 901px) 34vw, 72vw" loading="lazy" style={p.pos && `object-position:${p.pos}`} />
+          <Image src={photo(p.slug, p.cover)} alt={`${p.kind} shoot`} widths={[480, 720, 960, 1280, 1600]} sizes="(min-width: 901px) 34vw, 72vw" quality={88} loading="lazy" style={p.pos && `object-position:${p.pos}`} />
         </div>
         <footer class="pj__foot">
           <span class="pj__idx" aria-hidden="true">/{pad(i + 1)}</span>
