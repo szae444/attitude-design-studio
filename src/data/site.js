@@ -14,6 +14,8 @@ export const budgets = ['Below ₱50,000', '₱50,000 – ₱100,000', '₱100,0
 export const socials = [
   { label: 'Instagram', icon: 'instagram', handle: '@attitudedesignstudio', href: 'https://www.instagram.com/attitudedesignstudio' },
   { label: 'Facebook', icon: 'facebook', handle: 'Attitude Design Studio', href: 'https://www.facebook.com/share/1D4LP7RkSY/' },
+  { label: 'LinkedIn', icon: 'linkedin', handle: 'Attitude Creatives Design Studio', href: 'https://www.linkedin.com/company/attitude-creatives-design-studio/' },
+  { label: 'Threads', icon: 'threads', handle: '@attitudedesignstudio', href: 'https://www.threads.com/@attitudedesignstudio' },
 ];
 
 export const facts = [
