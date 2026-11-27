@@ -7,6 +7,7 @@ import { initReveals, initTouchCards } from './modules/reveal.js';
 import { initServices } from './modules/services.js';
 import { initForm } from './modules/form.js';
 import { initProjects } from './modules/projects.js';
+import { initBooking } from './modules/booking.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,7 +21,8 @@ initReveals(reduce);
 initTouchCards();
 initServices();
 initForm();
-initProjects();
+initProjects(lenis);
+initBooking(lenis, closeMenu);
 
 // Re-measure once images and fonts settle (avoids misplaced triggers on slow mobile networks).
 window.addEventListener('load', () => ScrollTrigger.refresh());

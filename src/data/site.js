@@ -1,6 +1,7 @@
 // All copy comes from the client's Figma company profile.
-// TODO(client): replace BOOKING_URL / EMAIL with the real booking link & inbox.
-export const BOOKING_URL = '#contact';
+// Booking: every "Book a call" button opens this Calendly page as a popup (scripts/modules/booking.js).
+// TODO(client): EMAIL with the real inbox.
+export const BOOKING_URL = 'https://calendly.com/attitude-designstudio22/30min';
 export const EMAIL = ''; // e.g. hello@yourdomain.com: leave empty to hide
 
 // Contact form. TODO(client): paste a form endpoint (Formspree / Web3Forms / Getform, etc.).
